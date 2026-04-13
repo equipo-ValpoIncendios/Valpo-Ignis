@@ -4,5 +4,5 @@ Proyecto de aplicacion GPS enfocada en enviar alertas de zonas de incendio, la c
 Integrantes: 
 Nicolas Lazcano,  Sebastian Rojas, Angelo De La Rivera y Rodrigo Sances 
 
-Figma 
+# Figma 
 https://www.figma.com/make/L7kJczFfb03QMJUuH8S2vK/Fire-Alert-App?t=BG0dHk62RgUfyJ7z-1
