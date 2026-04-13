@@ -5,4 +5,4 @@ Integrantes:
 Nicolas Lazcano,  Sebastian Rojas, Angelo De La Rivera y Rodrigo Sances 
 
 # Figma 
-https://www.figma.com/make/L7kJczFfb03QMJUuH8S2vK/Fire-Alert-App?t=BG0dHk62RgUfyJ7z-1
+https://www.figma.com/make/L7kJczFfb03QMJUuH8S2vK/Fire-Alert-App?p=f&t=Gcc1H9smyc8RL5ly-0&fullscreen=1
