@@ -28,7 +28,7 @@ Nuestra arquitectura se basa en 3 componentes principales:
 * SQLite (Base de Datos): Como el proyecto solo es parte de Valparaíso elegimos esta app de BD para registrar los datos pertinentes de la aplicación.
 
 ## Responsabilidades del equipo 
-|------------|-----|----------------------------| 
+|-----------------------|-----------------|------------------------------------------------------------------| 
 
 |   [Nicolas Lazcano]   |  [Scrum Master] |        [Creación del repositorio, creación de los Mockups]       | 
 
