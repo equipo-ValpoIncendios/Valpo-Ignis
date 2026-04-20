@@ -28,13 +28,10 @@ Nuestra arquitectura se basa en 3 componentes principales:
 * SQLite (Base de Datos): Como el proyecto solo es parte de Valparaíso elegimos esta app de BD para registrar los datos pertinentes de la aplicación.
 
 ## Responsabilidades del equipo 
-|-----------------------|-----------------|------------------------------------------------------------------| 
 
-|   [Nicolas Lazcano]   |  [Scrum Master] |        [Creación del repositorio, creación de los Mockups]       | 
-
-| [Angelo De La Rivera] | [Product Owner] |       [Creación de las US, escritos del archivo README.md]       | 
-
-|   [Sebastian Rojas]   |   [Developer]   | [creacioón de los Mockups, escritos del archivo Arquitectura.md] | 
-
-|   [Rodrigo Sances]    |   [Developer]   |         [escritos del archibo ReqExtrafuncionales.md]            | 
-
+| Nombre               | Rol           | Actividad |
+|----------------------|---------------|-----------|
+| Nicolás Lazcano     | Scrum Master | Creación del repositorio, creación de los mockups |
+| Angelo De La Rivera | Product Owner | Creación de las US, escritos del archivo README.md |
+| Sebastián Rojas     | Developer     | Creación de los mockups, escritos del archivo Arquitectura.md |
+| Rodrigo Sances      | Developer     | Escritos del archivo ReqExtrafuncionales.md |
