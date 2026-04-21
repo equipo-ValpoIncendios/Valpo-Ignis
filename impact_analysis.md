@@ -93,15 +93,9 @@ Trazabilidad — US-13: Registro en tiempo real
 | REF-04 | Las señales de rescate emitidas sin conexión deben encolarse y enviarse automáticamente al recuperar la conectividad. |
 | REF-05 | El sistema debe obtener, con permisos del usuario, su ubicación GPS en tiempo real mediante la API MDN de Geolocalización. |
 | REF-10 | La recolección de datos de geolocalización debe contar con el consentimiento explícito del usuario, conforme a la Ley 19.628 de Protección de la Vida Privada (Chile). |
-
-### ⚠️ Gap identificado
-
-Ningún REF actual cubre el log de errores de latencia por bombero descrito en CA2. Se recomienda agregar:
-
-| ID | Tipo | Prioridad | Descripción |
-|----|------|-----------|-------------|
-| REF-11 | Calidad de servicio (Confiabilidad) | Alta | El sistema debe registrar automáticamente en base de datos un log de error cuando una notificación supere los 500ms de latencia, incluyendo el ID del bombero y la latencia medida. |
+| REF-11 | El sistema debe registrar automáticamente en base de datos un log de error cuando una notificación supere los 500ms de latencia, incluyendo el ID del bombero y la latencia medida. |
 
 ## 10. Justificación global y trade-offs 
-[Por qué la solución propuesta es coherente con el sistema. 
-Qué trade-offs se asumieron y por qué.] 
+* La solución va de la mano con el proyecto inicial ya que al crear un sistema en momento real tanto para funcionarios de emergencia y usuarios da mayor flexibilidad y eficiencia al momento de actuar en una catástrofe, es mas que nada una actualización para que todo tenga respaldo y así por cualquier suceso desafortunado dentro de la emergencia se tenga registro de todo lo ocurrido.
+* En parte también da un salvavidas en temas legales ya que con los registros se sabrá con claridad todo lo ocurrido y además con justificación de que fue en tiempo real y toda la información fue ejecutada al mismo tiempo y sin un mayor retraso.
+* Los trade-offs son cambio de sistema a tres capas en vez de evento driven, cambio en los diseños para agregar nuevas opciones de funcionalidad, costo de producción y además de concentrar toda la lógica de cálculo de zonas seguras y rutas de evacuación exclusivamente en la capa de Lógica de Negocio, exponiéndola mediante una interfaz de servicio hacia la capa de Presentación. Los sacrificios son mínimos ya que mas haya de cambiar el sistema inicial se sigue llevando acabo el mismo propósito que es salvar de manera mas eficiente a las personas dentro de un incendio y alarmar a autoridades por el mismo.
