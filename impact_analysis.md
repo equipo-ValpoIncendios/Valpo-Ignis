@@ -55,7 +55,7 @@ Trazar cambios de prioridad que motiven cambios en decisiones de arquitectura.
 
 ## 5. Impacto en mockups 
 ### Mockups afectados:
-El mockup afectado por los cambios fue [#Link](https://www.figma.com/make/L7kJczFfb03QMJUuH8S2vK/Fire-Alert-App?p=f&t=Gcc1H9smyc8RL5ly-0&fullscreen=1) 
+El mockup afectado por los cambios es [este](https://www.figma.com/make/L7kJczFfb03QMJUuH8S2vK/Fire-Alert-App?p=f&t=Gcc1H9smyc8RL5ly-0&fullscreen=1) 
 donde se agregan los siguientes cambios:
 * Se añade una nueva sección pública "Registros de incendio activos" con una lista de tarjetas que muestran dirección, hora de alerta (HH:MM:SS) y servicios públicos disponibles.
 * Se añade una pantalla de notificación push que aparece al bombero al momento de crearse un registro, mostrando el ID del incendio, la hora de recepción y un indicador de estado según si llegó dentro del límite de 500ms.
