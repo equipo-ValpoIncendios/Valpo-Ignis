@@ -84,11 +84,11 @@ Al elegir Event-Driven se asume mayor complejidad en la gestión de la cola de e
 - **Módulo de Notificaciones → Módulo de Guía Logística:** Envía avisos de cortes de energía y actualizaciones logísticas relevantes para los servicios públicos.
 
 ---
-## Modelo de Diseño
+## Modelo de Dominio
 
 El siguiente diagrama de clases UML describe el modelo de dominio del sistema, mostrando las entidades principales, sus atributos, relaciones y paquetes funcionales.
-
-
+![Modelo de Dominio UML - Valpo Ignis](assets/modelo_dominio1.png)
+![Modelo de Dominio UML - Valpo Ignis](assets/modelo_dominio2.png)
 ## Decisiones de Diseño
 
 ### Decisión 1: Estilo Arquitectónico Event-Driven
