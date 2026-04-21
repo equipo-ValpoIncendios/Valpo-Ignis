@@ -89,6 +89,7 @@ Al elegir Event-Driven se asume mayor complejidad en la gestión de la cola de e
 El siguiente diagrama de clases UML describe el modelo de dominio del sistema, mostrando las entidades principales, sus atributos, relaciones y paquetes funcionales.
 ![Modelo de Dominio UML - Valpo Ignis](assets/Modelo_de_dominio1.png)
 ![Modelo de Dominio UML - Valpo Ignis](assets/Modelo_de_dominio2.png)
+
 ## Decisiones de Diseño
 
 ### Decisión 1: Estilo Arquitectónico Event-Driven
