@@ -51,7 +51,102 @@ Trazar cambios de prioridad que motiven cambios en decisiones de arquitectura.
 | REF-09 | Orden cronológico estricto y entrega sin duplicados entre emisión y recepción | — | Crítica | Nuevo REF derivado del cambio no funcional. Impacta arquitectura del broker (FIFO garantizado, deduplicación idempotente). |
 
 ## 4. Impacto en entidades del dominio 
-[Nuevas entidades, atributos o relaciones afectadas] 
+
+### Entidades afectadas por US-13 y los nuevos REFs
+
+---
+
+### 🔥 Alerta de Incendio
+
+**Cambio:** Pasa de ser un evento efímero del bus a convertirse en una entidad persistente con trazabilidad judicial.
+
+| Atributo nuevo / modificado | Descripción |
+|-----------------------------|-------------|
+| `timestamp_emision` | Hora exacta (HH:MM:SS) en que se emitió la alerta. Requerido por CA1. |
+| `coordenadas` / `direccion` | Ya existía, pero ahora es parte del registro inmutable. |
+| `snapshot_servicios` | Nuevo atributo: estado de todos los servicios públicos activos al momento de la alerta. |
+| `firma_digital` | Nuevo atributo: firma criptográfica del registro para garantizar no-repudio (REF-07). |
+| `estado_log` | Indica si el registro fue correctamente almacenado en el almacén append-only. |
+
+**Impacto arquitectónico:** La entidad ahora debe persistirse de forma síncrona y replicada antes de propagarse al bus de eventos, para garantizar que el log judicial nunca se pierda (REF-03, REF-07).
+
+---
+
+### 🚒 Bombero / Servicio Público
+
+**Cambio:** Adquiere un nuevo rol como **receptor auditado** de alertas, no solo como consumidor de eventos.
+
+| Atributo nuevo / modificado | Descripción |
+|-----------------------------|-------------|
+| `id_bombero` | Ya existía. Ahora se usa como clave de trazabilidad en los logs de latencia (CA2). |
+| `timestamp_recepcion` | Nuevo atributo: hora exacta en que el bombero recibió la notificación de alerta. |
+| `latencia_ms` | Nuevo atributo: diferencia entre `timestamp_emision` y `timestamp_recepcion`, registrada por notificación. |
+| `estado_notificacion` | Nuevo atributo: `OK` si llegó dentro de 500ms, `ERROR` si superó el límite (REF-08, REF-11). |
+
+**Impacto arquitectónico:** Cada instancia de recepción de alerta por un bombero genera un sub-registro en la base de datos. Si la latencia supera 500ms, se persiste un log de error vinculado al `id_bombero` y al registro del incendio (REF-11).
+
+---
+
+### 📋 Registro de Incendio Activo
+
+**Cambio:** Entidad **completamente nueva** introducida por US-13 (CA1). Materializa el log auditable como una entidad de dominio de primera clase.
+
+| Atributo | Descripción |
+|----------|-------------|
+| `id_registro` | Identificador único del registro. |
+| `id_alerta` | Referencia a la alerta de incendio que lo originó. |
+| `timestamp_alerta` | Hora exacta de emisión (HH:MM:SS). |
+| `coordenadas` / `direccion` | Ubicación del incendio al momento de la alerta. |
+| `servicios_disponibles` | Snapshot de los servicios públicos activos en ese momento. |
+| `visibilidad` | `público` — visible en la sección "Registros de incendio activos". |
+| `inmutable` | El registro no puede ser modificado ni eliminado una vez creado (append-only, REF-07). |
+| `firma_digital` | Garantiza integridad para uso judicial. |
+
+**Relaciones:**
+- Un `Registro de Incendio Activo` se genera a partir de una `Alerta de Incendio`.
+- Un `Registro de Incendio Activo` está asociado a uno o más `LogNotificacionBombero`.
+
+---
+
+### 📡 Log de Notificación por Bombero
+
+**Cambio:** Entidad **nueva** introducida por US-13 (CA2). Registra el comportamiento de entrega de cada notificación.
+
+| Atributo | Descripción |
+|----------|-------------|
+| `id_log` | Identificador único del log. |
+| `id_registro` | Referencia al `Registro de Incendio Activo` asociado. |
+| `id_bombero` | Referencia al bombero que debía recibir la notificación. |
+| `timestamp_emision` | Hora de envío de la notificación. |
+| `timestamp_recepcion` | Hora en que el bombero recibió la notificación. |
+| `latencia_ms` | Latencia calculada en milisegundos. |
+| `tipo` | `OK` si latencia ≤ 500ms / `ERROR` si latencia > 500ms (REF-08, REF-11). |
+
+**Relaciones:**
+- Un `Registro de Incendio Activo` genera N `LogNotificacionBombero`, uno por cada bombero activo al momento de la alerta.
+- Los registros de tipo `ERROR` son accesibles para auditoría operacional (REF-05).
+
+---
+
+### 🧑 Usuario / Víctima
+
+**Cambio:** No se agregan atributos nuevos, pero la entidad se ve **indirectamente afectada**.
+
+| Aspecto | Descripción |
+|---------|-------------|
+| Orden de recepción | Las alertas ahora llegan en orden cronológico estricto y sin duplicados (REF-09), mejorando la confiabilidad de la información que recibe. |
+| Latencia garantizada | El SLA de 500ms (REF-08) beneficia también a los usuarios, aunque el foco de auditoría es el canal de bomberos. |
+
+---
+
+### Resumen de relaciones nuevas
+
+```
+Alerta de Incendio
+    └── genera ──▶ Registro de Incendio Activo
+                        └── genera (1..N) ──▶ Log de Notificación por Bombero
+                                                    └── vinculado a ──▶ Bombero
+```
 
 ## 5. Impacto en mockups 
 ### Mockups afectados:
@@ -62,13 +157,20 @@ donde se agregan los siguientes cambios:
 
 
 ## 6. Impacto en arquitectura 
-¿Cambia el estilo arquitectónico? [Sí/No] — Justificación: 
-[descripción] 
+* ¿Cambia el estilo arquitectónico? Sí, se cambia de Event-Driven al modelo de **3 Capas**
+* Justificación: El modelo event driven no es compatible con estos cambios, debido a que _"Event-driven distribuido no garantiza entrega ordenada ni exactly-once sin infraestructura adicional compleja. La exigencia de auditoría judicial y orden estricto con baja latencia simultáneamente es incompatible con un modelo puramente reactivo."_, por esto se hace el cambio al modelo de 3 Capas el cuál se adapta mejor al uso de Front-End <-> Back-End <-> Base de Datos. \
+Así cuando se necesita crear registros de los incendios activos en tiempo real, cuando se utiliza el botón de la alerta de incendios vía el codigo de la aplicación se registra a una BD para poder almacenar los registros de los incendios por los requirimentos hecho por el cambio funcional.    
 
 ## 7. Impacto en módulos 
-| Módulo | Tipo de impacto | Descripción | 
-|--------|-----------------|-------------| 
-| [módulo] | [nuevo/modificado/eliminado] | [descripción] | 
+| Módulo                          | Tipo de impacto | Responsabilidad actualizada                                                                                                                                      | Ofrece a otros (actualizado)                                                                                  |
+|---------------------------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------|
+| Alertas en Tiempo Real          | modificado      | Además de propagar alertas al bus de eventos, debe persistir un `Registro de Incendio Activo` de forma síncrona antes de publicar el evento, garantizando el log inmutable (REF-07). | Evento de alerta publicado al bus; referencia al `id_registro` creado, disponible para los demás módulos.     |
+| Guía Logística                  | modificado      | Incorpora la sección pública "Registros de incendio activos", mostrando tarjetas con dirección, `timestamp_alerta` y snapshot de servicios disponibles (US-13 CA1). | Vista de registros históricos y activos consultable por Bomberos, SENAPRED y auditores.| | Localizador de Rescate          | sin cambio      | Mantiene su responsabilidad de emitir señales de rescate y operar en modo offline.                                                                               | Señales de rescate encoladas; estado del localizador al bus de eventos.                                       |
+| Notificaciones Push             | modificado      | Debe entregar alertas a bomberos en orden cronológico estricto, sin duplicados y con latencia ≤ 500ms (REF-08, REF-09). Registra `timestamp_recepcion` por cada entrega. | Confirmación de recepción con latencia medida hacia el módulo de Auditoría de Latencia.                       |
+| Auditoría de Latencia           | nuevo           | Recibe las confirmaciones de entrega del módulo de Notificaciones Push, calcula la latencia por bombero y persiste un `LogNotificacionBombero`. Si latencia > 500ms, genera un log de error (REF-11). | Logs de error y registros de latencia consultables por el módulo de Guía Logística y auditores externos.      |
+| Almacén de Logs (Append-Only)   | nuevo           | Persiste de forma inmutable todos los `Registro de Incendio Activo` y `LogNotificacionBombero`. Aplica firma digital para garantizar no-repudio (REF-07). Gestiona política de retención legal. | API de solo lectura para auditores judiciales y el módulo de Guía Logística; no permite operaciones de update ni delete. |
+| Rutas de Evacuación             | sin cambio      | Mantiene su responsabilidad de calcular rutas según ubicación, terreno y zona de incendio.                                                                       | Ruta calculada con zona segura hacia la interfaz de Usuario/Víctima.                                          |
+| Interfaz Servicio Público       | modificado      | Agrega pantalla de notificación push que muestra al bombero el `id_registro`, `timestamp_recepcion` e indicador de estado OK/ERROR según el límite de 500ms (US-13 CA2). | Confirmación de lectura de notificación hacia el módulo de Notificaciones Push.                               |
 
 ## 8. Nuevas decisiones de diseño 
 ### Decisión: Adoptar una arquitectura de 3 capas (Presentación, Lógica de Negocio, Datos) como estructura base del sistema.
