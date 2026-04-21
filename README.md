@@ -23,8 +23,8 @@ Todas las historias están registradas como Issues y registradas en el proyecto,
 | US-05 |Serv. Púb.| Interfaz Bombero/Rescatista           | [#18](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/18) |
 | US-06 |Serv. Púb.| Localizador de victimas               | [#17](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/17) |
 | US-07 |Serv. Púb.| Reportes falsos                       | [#21](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/21) |
-| US-08 |Serv. Púb.| | [#18](./issues/18) |
-| US-09 |Serv. Púb.|    | [#19](./issues/19) |
+| US-08 |Serv. Púb.| "Se Buscan"                           | [#20](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/20) |
+| US-09 |Serv. Púb.| Identificación de fallecidos          | [#22](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/22) |
 | US-10 |Serv. Púb.|    | [#6](./issues/6)   |
 | US-11 | SENAPRED |     | [#20](./issues/20) |
 | US-12 | SENAPRED |    | [#20](./issues/20) |
