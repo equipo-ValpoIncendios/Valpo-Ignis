@@ -26,8 +26,8 @@ Todas las historias están registradas como Issues y registradas en el proyecto,
 | US-08 |Serv. Púb.| "Se Buscan"                           | [#20](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/20) |
 | US-09 |Serv. Púb.| Identificación de fallecidos          | [#22](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/22) |
 | US-10 |Serv. Púb.| Aviso cortes de energía               | [#23](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/23) |
-| US-11 | SENAPRED |     | [#20](./issues/20) |
-| US-12 | SENAPRED |    | [#20](./issues/20) |
+| US-11 | SENAPRED | Informe de desaparecidos              | [#13](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/13) |
+| US-12 | SENAPRED | Informe de evacuados                  | [#14](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/14) |
  
 ## Mockup: 
 https://www.figma.com/make/L7kJczFfb03QMJUuH8S2vK/Fire-Alert-App?p=f&t=Gcc1H9smyc8RL5ly-0&fullscreen=1
