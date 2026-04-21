@@ -36,7 +36,7 @@ https://www.figma.com/make/L7kJczFfb03QMJUuH8S2vK/Fire-Alert-App?p=f&t=Gcc1H9smy
 
 | Nombre               | Rol           | Actividad |
 |----------------------|---------------|-----------|
-| Nicolás Lazcano     | Scrum Master | Creación del repositorio, creación de los mockups |
+| Nicolás Lazcano     | Scrum Master | Creación del repositorio, creación de los mockups, escritos del archivo Arquitectura.md, Modelo de Dominio |
 | Angelo De La Rivera | Product Owner | Creación de las US, escritos del archivo README.md |
-| Sebastián Rojas     | Developer     | Creación de los mockups, escritos del archivo Arquitectura.md |
+| Sebastián Rojas     | Developer     | Creación de los mockups, escritos del archivo Arquitectura.md, Modelo de Dominio |
 | Rodrigo Sances      | Developer     | Escritos del archivo ReqExtrafuncionales.md |
