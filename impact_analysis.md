@@ -49,3 +49,59 @@ Trazar cambios de prioridad que motiven cambios en decisiones de arquitectura.
 | REF-05 | Mantenibilidad y observabilidad — métricas, trazas y dashboards operacionales | Media | Media | Sin cambio en nivel. Se agrega obligatoriedad de instrumentar latencia de extremo a extremo (p99) para verificar cumplimiento del SLA. |
 | REF-08 | Latencia de entrega ≤ 500 ms desde emisión hasta recepción en todos los receptores | — | Crítica | Nuevo REF derivado del cambio no funcional. Define SLA estricto. Requiere revisión de infraestructura de mensajería y monitoreo continuo. |
 | REF-09 | Orden cronológico estricto y entrega sin duplicados entre emisión y recepción | — | Crítica | Nuevo REF derivado del cambio no funcional. Impacta arquitectura del broker (FIFO garantizado, deduplicación idempotente). |
+
+## 4. Impacto en entidades del dominio 
+[Nuevas entidades, atributos o relaciones afectadas] 
+
+## 5. Impacto en mockups 
+### Mockups afectados:
+El mockup afectado por los cambios fue [#Link](https://www.figma.com/make/L7kJczFfb03QMJUuH8S2vK/Fire-Alert-App?p=f&t=Gcc1H9smyc8RL5ly-0&fullscreen=1) 
+donde se agregan los siguientes cambios:
+* Se añade una nueva sección pública "Registros de incendio activos" con una lista de tarjetas que muestran dirección, hora de alerta (HH:MM:SS) y servicios públicos disponibles.
+* Se añade una pantalla de notificación push que aparece al bombero al momento de crearse un registro, mostrando el ID del incendio, la hora de recepción y un indicador de estado según si llegó dentro del límite de 500ms.
+
+
+## 6. Impacto en arquitectura 
+¿Cambia el estilo arquitectónico? [Sí/No] — Justificación: 
+[descripción] 
+
+## 7. Impacto en módulos 
+| Módulo | Tipo de impacto | Descripción | 
+|--------|-----------------|-------------| 
+| [módulo] | [nuevo/modificado/eliminado] | [descripción] | 
+
+## 8. Nuevas decisiones de diseño 
+### Decisión: Adoptar una arquitectura de 3 capas (Presentación, Lógica de Negocio, Datos) como estructura base del sistema.
+* Motivación: El aumento de prioridad de la mantenibilidad (REF-04 pasa a Alta) exige que los módulos de alertas, rutas de evacuación y guía logística puedan evolucionar de forma independiente. Una arquitectura sin separación clara de responsabilidades haría que cambios en, por ejemplo, el algoritmo de cálculo de rutas * impactaran directamente la interfaz o la persistencia. \
+* Alternativas consideradas: Arquitectura monolítica en una sola capa (descartada por alto acoplamiento); arquitectura de microservicios (descartada por complejidad operacional excesiva para el alcance actual del proyecto). \
+* Impacto: Afecta directamente los módulos de rutas de evacuación (US-02, US-13), alertas en tiempo real (US-01) y guía logística (US-11, US-12). Eleva REF-04 (mantenibilidad) a prioridad Alta y reduce REF-03 (testeabilidad) a prioridad Media al dejar de ser el atributo conductor.
+
+## 9. Trazabilidad actualizada 
+Trazabilidad — US-13: Registro en tiempo real
+
+| Historia | REF relacionado | Módulo | Mockup |
+|----------|-----------------|--------|--------|
+| US-13 (CA1: Registro del incendio) | REF-01, REF-05, REF-10 | Alertas en Tiempo Real / Guía Logística | Se añade una nueva sección pública "Registros de incendio activos" con una lista de tarjetas que muestran dirección, hora de alerta (HH:MM:SS) y servicios públicos disponibles. |
+| US-13 (CA2: Alertas del registro) | REF-01, REF-02, REF-04 | Alertas en Tiempo Real | Se añade una pantalla de notificación push que aparece al bombero al momento de crearse un registro, mostrando el ID del incendio, la hora de recepción y un indicador de estado según si llegó dentro del límite de 500ms. |
+
+### Descripción de REFs relacionados
+
+| REF | Descripción |
+|-----|-------------|
+| REF-01 | El sistema debe generar y propagar una alerta de incendio a los usuarios del área afectada en menos de 3 segundos desde su publicación. |
+| REF-02 | El módulo de Localizador de Rescate debe permanecer operativo en todo momento, incluso si otros módulos de la app fallan. |
+| REF-04 | Las señales de rescate emitidas sin conexión deben encolarse y enviarse automáticamente al recuperar la conectividad. |
+| REF-05 | El sistema debe obtener, con permisos del usuario, su ubicación GPS en tiempo real mediante la API MDN de Geolocalización. |
+| REF-10 | La recolección de datos de geolocalización debe contar con el consentimiento explícito del usuario, conforme a la Ley 19.628 de Protección de la Vida Privada (Chile). |
+
+### ⚠️ Gap identificado
+
+Ningún REF actual cubre el log de errores de latencia por bombero descrito en CA2. Se recomienda agregar:
+
+| ID | Tipo | Prioridad | Descripción |
+|----|------|-----------|-------------|
+| REF-11 | Calidad de servicio (Confiabilidad) | Alta | El sistema debe registrar automáticamente en base de datos un log de error cuando una notificación supere los 500ms de latencia, incluyendo el ID del bombero y la latencia medida. |
+
+## 10. Justificación global y trade-offs 
+[Por qué la solución propuesta es coherente con el sistema. 
+Qué trade-offs se asumieron y por qué.] 
