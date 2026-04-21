@@ -84,6 +84,10 @@ Al elegir Event-Driven se asume mayor complejidad en la gestión de la cola de e
 - **Módulo de Notificaciones → Módulo de Guía Logística:** Envía avisos de cortes de energía y actualizaciones logísticas relevantes para los servicios públicos.
 
 ---
+## Modelo de Diseño
+
+El siguiente diagrama de clases UML describe el modelo de dominio del sistema, mostrando las entidades principales, sus atributos, relaciones y paquetes funcionales.
+
 
 ## Decisiones de Diseño
 
