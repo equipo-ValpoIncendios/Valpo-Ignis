@@ -1,0 +1,25 @@
+{
+  "name": "valpo-ignis",
+  "version": "1.0.0",
+  "description": "Es de conocer general que la problematica número 1 durante incendios es la falta de información tanto para los servicios publicos que asisten durante uno y las victimas que, dependiendo del caso, se ven atrapadas que desconocen la \"big picture\" de la situación. Creemos que la alerta enviada por el Sistema de Alertas de Emergencia (SAE) no es suficiente para los ciudadanos de Valparaíso.",
+  "main": "index.js",
+  "scripts":{
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/equipo-ValpoIncendios/Valpo-Ignis.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues"
+  },
+  "homepage": "https://github.com/equipo-ValpoIncendios/Valpo-Ignis#readme",
+  "dependencies": {
+    "better-sqlite3": "^12.9.0",
+    "express": "^5.2.1"
+  }
+}
