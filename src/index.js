@@ -1,41 +1,118 @@
-const express = require('express');
-const db      = require('./storage/db'); //tiene que tener el nombre ./nombre_db sino no la encuentra
-const app     = express();
+const express      = require('express');
+const db           = require('./storage/db');
+const swaggerUi    = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
 
+const app = express();
 app.use(express.json());
 
-// GET /incendios
-app.get('/incendios', (req, res) => { // aqui falta el nombre de la ruta
-  const incendios = db.prepare('SELECT * FROM incendios').all();
-  res.json(incendios);
+const swaggerSpec = swaggerJsdoc({
+  definition: {
+    openapi: '3.0.0',
+    info: { title: 'API Incendios', version: '1.0.0',
+            description: 'API para gestionar informes de incendios' }
+  },
+  apis: ['./index.js']
+});
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+/**
+ * @swagger
+ * /incendios:
+ *   get:
+ *     summary: Lista todos los informes
+ *     responses:
+ *       200:
+ *         description: Array de informes
+ */
+app.get('/incendios', (req, res) => {
+  res.json(db.prepare('SELECT * FROM incendios').all());
 });
 
-// POST /incendios
+/**
+ * @swagger
+ * /incendios:
+ *   post:
+ *     summary: Crea un nuevo informe
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               fechaHoradia:    { type: string }
+ *               estado:          { type: string }
+ *               nivelGravedad:   { type: string }
+ *               ubicacion:       { type: string }    
+ *     responses:
+ *       201:
+ *         description: Informe creado
+ */
 app.post('/incendios', (req, res) => {
-  const { fechaHoraDia, estado, nivelGravedad, ubicacion } = req.body;
-  const result = db.prepare(
-    'INSERT INTO incendios (fechaHoraDia, estado, nivelGravedad, ubicacion) VALUES (?, ?, ?, ?)'
-  ).run(fechaHoraDia, estado, nivelGravedad, ubicacion);
-  res.status(201).json({ id: result.lastInsertRowid, fechaHoraDia, estado, nivelGravedad, ubicacion });
+  const { fechaHoradia, estado, nivelGravedad, ubicacion } = req.body;
+  const r = db.prepare(
+    'INSERT INTO incendios (fechaHoradia, estado, nivelGravedad, ubicacion) VALUES (?, ?, ?, ?)'
+  ).run(fechaHoradia, estado, nivelGravedad, ubicacion);
+  res.status(201).json({ id: r.lastInsertRowid, fechaHoradia, estado, nivelGravedad, ubicacion });
 });
 
-// PUT /incendios/:id
+/**
+ * @swagger
+ * /incendios/{id}:
+ *   put:
+ *     summary: Modifica un informe
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: integer }
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               fechaHoradia:    { type: string }
+ *               estado:          { type: string }
+ *               nivelGravedad:   { type: string }
+ *               ubicacion:       { type: string }
+ *     responses:
+ *       200:
+ *         description: Informe actualizado
+ *       404:
+ *         description: No encontrado
+ */
 app.put('/incendios/:id', (req, res) => {
-  const { fechaHoraDia, estado, nivelGravedad, ubicacion } = req.body;
-  const info = db.prepare(
-    'UPDATE incendios SET fechaHoraDia=?, estado=?, nivelGravedad=?, ubicacion=? WHERE id=?'
-  ).run(fechaHoraDia, estado, nivelGravedad, ubicacion, req.params.id);
-  if (info.changes === 0) return res.status(404).json({ error: 'Incendio no encontrado' });
-  res.json({ mensaje: 'Incendio actualizado' });
+  const { fechaHoradia, estado, nivelGravedad, ubicacion } = req.body;
+  const i = db.prepare(
+    'UPDATE incendios SET fechaHoradia=?, estado=?, nivelGravedad=?, ubicacion=? WHERE id=?'
+  ).run(fechaHoradia, estado, nivelGravedad, ubicacion, req.params.id);
+  if (i.changes === 0) return res.status(404).json({ error: 'Informe no encontrado' });
+  res.json({ mensaje: 'Informe actualizado' });
 });
 
-// DELETE /incendios/:id
+/**
+ * @swagger
+ * /incendios/{id}:
+ *   delete:
+ *     summary: Elimina un informe
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: integer }
+ *     responses:
+ *       200:
+ *         description: Informe eliminado
+ *       404:
+ *         description: No encontrado
+ */
 app.delete('/incendios/:id', (req, res) => {
-  const info = db.prepare('DELETE FROM incendios WHERE id=?').run(req.params.id);
-  if (info.changes === 0) return res.status(404).json({ error: 'Incendio no encontrado' });
-  res.json({ mensaje: 'Incendio eliminado' });
+  const i = db.prepare('DELETE FROM incendios WHERE id=?').run(req.params.id);
+  if (i.changes === 0) return res.status(404).json({ error: 'Informe no encontrado' });
+  res.json({ mensaje: 'Informe eliminado' });
 });
 
-app.listen(3000, () => {
-  console.log('API corriendo en http://localhost:3000/incendios');
-});
+app.listen(3000, () => console.log('API en http://localhost:3000/incendios'));
