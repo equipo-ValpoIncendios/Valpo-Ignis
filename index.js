@@ -120,4 +120,9 @@ app.delete('/incendios/:id', (req, res) => {
   res.json({ mensaje: 'Incendio eliminado' });
 });
 
-app.listen(3000, () => console.log('API en http://localhost:3000/incendios'));
+app.get('/', (req, res) => {
+  res.json({ mensaje: 'API Incendios activa', docs: '/docs', endpoints: '/incendios' });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`API escuchando en puerto ${PORT}`));
