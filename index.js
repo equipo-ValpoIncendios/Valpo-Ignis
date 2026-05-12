@@ -9,8 +9,13 @@ app.use(express.json());
 const swaggerSpec = swaggerJsdoc({
   definition: {
     openapi: '3.0.0',
-    info: { title: 'API Incendios', version: '1.0.0',
-            description: 'API para gestionar informes de incendios activos' }
+    info: { 
+      title: 'API Incendios', version: '1.0.0', description: 'API para gestionar informes de incendios activos' 
+    },
+    server: [
+      { url: 'https://incendios-api-esl2.onrender.com', description: 'Produccion'},
+      { url: 'http://localhost:3000/incendios', description: 'local'}
+    ]
   },
   apis: ['./index.js']
 });
