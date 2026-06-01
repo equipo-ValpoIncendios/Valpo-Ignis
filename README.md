@@ -14,29 +14,38 @@ Para esto decidimos crear una aplicación GPS enfocada en feedback de los usuari
 
 ## Historias de Usuario:
 Todas las historias están registradas como Issues y registradas en el proyecto, aquí el listado de estas:
-| ID    | Epica | Nombre                                   | Issue               |
-|-------|-------|------------------------------------------|---------------------|
-| US-01 | Victimas | Interfaz usuario general              | [#19](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/19) |
-| US-02 | Victimas | Rutas de escape                       | [#15](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/15) |
-| US-03 | Victimas | Localizador de Rescate                | [#16](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/16) |
-| US-04 | Victimas | Foro Desaparecidos                    | [#24](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/24) |
-| US-05 |Serv. Púb.| Interfaz Bombero/Rescatista           | [#18](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/18) |
-| US-06 |Serv. Púb.| Localizador de victimas               | [#17](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/17) |
-| US-07 |Serv. Púb.| Reportes falsos                       | [#21](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/21) |
-| US-08 |Serv. Púb.| Búsqueda perpretador                  | [#20](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/20) |
-| US-09 |Serv. Púb.| Identificación de fallecidos          | [#22](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/22) |
-| US-10 |Serv. Púb.| Aviso cortes de energía               | [#23](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/23) |
-| US-11 | SENAPRED | Informe de desaparecidos              | [#13](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/13) |
-| US-12 | SENAPRED | Informe de evacuados                  | [#14](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/14) |
+
+| ID    | Epica     | Nombre                                 | Issue                                                                 |
+|-------|-----------|----------------------------------------|-----------------------------------------------------------------------|
+| US-01 |  Victimas  | Interfaz usuario general              | [#19](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/19) |
+| US-02 |  Victimas  | Rutas de escape                       | [#15](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/15) |
+| US-03 |  Victimas  | Localizador de Rescate                | [#16](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/16) |
+| US-04 |  Victimas  | Foro Desaparecidos                    | [#24](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/24) |
+| US-05 | Serv. Púb. | Interfaz Bombero/Rescatista           | [#18](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/18) |
+| US-06 | Serv. Púb. | Localizador de victimas               | [#17](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/17) |
+| US-07 | Serv. Púb. | Reportes falsos                       | [#21](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/21) |
+| US-08 | Serv. Púb. | Búsqueda perpretador                  | [#20](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/20) |
+| US-09 | Serv. Púb. | Identificación de fallecidos          | [#22](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/22) |
+| US-10 | Serv. Púb. | Aviso cortes de energía               | [#23](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/23) |
+| US-11 |  SENAPRED  | Informe de desaparecidos              | [#13](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/13) |
+| US-12 |  SENAPRED  | Informe de evacuados                  | [#14](https://github.com/equipo-ValpoIncendios/Valpo-Ignis/issues/14) |
  
 ## Mockup: 
 https://www.figma.com/make/L7kJczFfb03QMJUuH8S2vK/Fire-Alert-App?p=f&t=Gcc1H9smyc8RL5ly-0&fullscreen=1
 
 ## Responsabilidades del equipo 
-
-| Nombre               | Rol           | Actividad |
-|----------------------|---------------|-----------|
-| Nicolás Lazcano     | Scrum Master | Creación del repositorio, creación de los mockups, escritos del archivo Arquitectura.md |
+### Entrega 1/Sumativa 1
+| Nombre              | Rol           | Actividad |
+|---------------------|---------------|-----------|
+| Nicolás Lazcano     | Scrum Master  | Creación del repositorio, creación de los mockups, escritos del archivo Arquitectura.md |
 | Angelo De La Rivera | Product Owner | Creación de las US, escritos del archivo README.md |
 | Sebastián Rojas     | Developer     | Creación de los mockups, Modelo de Dominio |
 | Rodrigo Sances      | Developer     | Escritos del archivo ReqExtrafuncionales.md |
+
+### Entrega 2
+| Nombre              | Rol           | Actividad |
+|---------------------|---------------|-----------|
+| Nicolás Lazcano     | Scrum Master  | Actualizar US, Actualizar el Mockup |
+| Angelo De La Rivera | Product Owner | Creación de la API de Base de Datos |
+| Sebastián Rojas     | Developer     | Actualizar Modelo de Domini |
+| Rodrigo Sances      | Developer     | Corrección Sumativa 1 |
