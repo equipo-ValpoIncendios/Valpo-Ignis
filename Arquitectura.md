@@ -3,6 +3,7 @@
 ---
 
 ## Estilo Adoptado: Event-Driven (Orientado a Eventos)
+<img width="815" height="679" alt="image" src="https://github.com/user-attachments/assets/9713ecaf-70b7-4c0e-8ea8-ef2cfb506a12" />
 
 ### Justificación basada en REF priorizados:
 
@@ -121,4 +122,4 @@ Al elegir Event-Driven se asume mayor complejidad en la gestión de la cola de e
 
 - **ASR 4 (REF-10):** La recolección de datos de geolocalización debe contar con consentimiento explícito del usuario, conforme a la Ley 19.628 de Protección de la Vida Privada (Chile).
   Abordado mediante flujo obligatorio de solicitud de permisos en el Módulo de Geolocalización antes de activar cualquier función que use coordenadas GPS.
-<img width="815" height="679" alt="image" src="https://github.com/user-attachments/assets/9713ecaf-70b7-4c0e-8ea8-ef2cfb506a12" />
+
