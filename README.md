@@ -45,7 +45,7 @@ https://www.figma.com/make/L7kJczFfb03QMJUuH8S2vK/Fire-Alert-App?p=f&t=Gcc1H9smy
 ### Entrega 2
 | Nombre              | Rol           | Actividad |
 |---------------------|---------------|-----------|
-| Nicolás Lazcano     | Scrum Master  | Actualizar US, Actualizar el Mockup |
+| Nicolás Lazcano     | Scrum Master  | Actualización de US |
 | Angelo De La Rivera | Product Owner | Creación de la API de Base de Datos |
-| Sebastián Rojas     | Developer     | Actualizar Modelo de Domini |
+| Sebastián Rojas     | Developer     | Actualización de US |
 | Rodrigo Sances      | Developer     | Corrección Sumativa 1 |
