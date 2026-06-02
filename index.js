@@ -1,128 +1,41 @@
-const express      = require('express');
-const db           = require('./db');
-const swaggerUi    = require('swagger-ui-express');
-const swaggerJsdoc = require('swagger-jsdoc');
+const express = require('express');
+const db      = require('./db');
+const app     = express();
 
-const app = express();
 app.use(express.json());
 
-const swaggerSpec = swaggerJsdoc({
-  definition: {
-    openapi: '3.0.0',
-    info: { 
-      title: 'API Incendios', version: '1.0.0', description: 'API para gestionar informes de incendios activos' 
-    },
-    server: [
-      { url: 'https://incendios-api-esl2.onrender.com', description: 'Produccion'},
-      { url: 'http://localhost:3000/incendios', description: 'local'}
-    ]
-  },
-  apis: ['./index.js']
-});
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-/**
- * @swagger
- * /incendios:
- *   get:
- *     summary: Lista todos los incendios
- *     responses:
- *       200:
- *         description: Array de incendios
- */
+// GET /cursos
 app.get('/incendios', (req, res) => {
-  res.json(db.prepare('SELECT * FROM incendios').all());
+  const incendios = db.prepare('SELECT * FROM incendios').all();
+  res.json(incendios);
 });
 
-/**
- * @swagger
- * /incendios:
- *   post:
- *     summary: Crea un nuevo incendio
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               fechaHora:      { type: string, format: date-time }
- *               estado:         { type: string }
- *               nivelGravedad:  { type: string }
- *               ubicacion:      { type: string }
- *     responses:
- *       201:
- *         description: Incendio creado
- */
+// POST /incendios
 app.post('/incendios', (req, res) => {
   const { fechaHora, estado, nivelGravedad, ubicacion } = req.body;
-  const r = db.prepare(
+  const result = db.prepare(
     'INSERT INTO incendios (fechaHora, estado, nivelGravedad, ubicacion) VALUES (?, ?, ?, ?)'
   ).run(fechaHora, estado, nivelGravedad, ubicacion);
-  res.status(201).json({ id: r.lastInsertRowid, fechaHora, estado, nivelGravedad, ubicacion });
+  res.status(201).json({ id: result.lastInsertRowid, fechaHora, estado, nivelGravedad, ubicacion });
 });
 
-/**
- * @swagger
- * /incendios/{id}:
- *   put:
- *     summary: Modifica un incendio
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema: { type: integer }
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               fechaHora:      { type: string, format: date-time }
- *               estado:         { type: string }
- *               nivelGravedad:  { type: string }
- *               ubicacion:      { type: string }
- *     responses:
- *       200:
- *         description: Incendio actualizado
- *       404:
- *         description: No encontrado
- */
+// PUT /incendios/:id
 app.put('/incendios/:id', (req, res) => {
   const { fechaHora, estado, nivelGravedad, ubicacion } = req.body;
-  const i = db.prepare(
+  const info = db.prepare(
     'UPDATE incendios SET fechaHora=?, estado=?, nivelGravedad=?, ubicacion=? WHERE id=?'
   ).run(fechaHora, estado, nivelGravedad, ubicacion, req.params.id);
-  if (i.changes === 0) return res.status(404).json({ error: 'Incendio no encontrado' });
+  if (info.changes === 0) return res.status(404).json({ error: 'Incendio no encontrado' });
   res.json({ mensaje: 'Incendio actualizado' });
 });
 
-/**
- * @swagger
- * /incendios/{id}:
- *   delete:
- *     summary: Elimina un incendio
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema: { type: integer }
- *     responses:
- *       200:
- *         description: Incendio eliminado
- *       404:
- *         description: No encontrado
- */
+// DELETE /incendios/:id
 app.delete('/incendios/:id', (req, res) => {
-  const i = db.prepare('DELETE FROM incendios WHERE id=?').run(req.params.id);
-  if (i.changes === 0) return res.status(404).json({ error: 'Incendio no encontrado' });
+  const info = db.prepare('DELETE FROM incendios WHERE id=?').run(req.params.id);
+  if (info.changes === 0) return res.status(404).json({ error: 'Incendio no encontrado' });
   res.json({ mensaje: 'Incendio eliminado' });
 });
 
-app.get('/', (req, res) => {
-  res.json({ mensaje: 'API Incendios activa', docs: '/docs', endpoints: '/incendios' });
+app.listen(3000, () => { // Se coloca el nombre de la ruta en el mensaje para que sea más claro al iniciar el servidor
+  console.log('API corriendo en http://localhost:3000/incendios');
 });
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`API escuchando en puerto ${PORT}`));
