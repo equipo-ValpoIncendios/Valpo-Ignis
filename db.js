@@ -3,11 +3,12 @@ const db = new Database('datos.db');
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS incendios (
-    id            INTEGER PRIMARY KEY AUTOINCREMENT,
-    fechaHora     TEXT NOT NULL,
-    estado        TEXT NOT NULL,
-    nivelGravedad TEXT NOT NULL,
-    ubicacion     TEXT NOT NULL
+    id                        INTEGER PRIMARY KEY AUTOINCREMENT,
+    fecha_hora_reporte        TIMESTAMP NOT NULL,
+    direccion_aproximada      TEXT NOT NULL, 
+    nivel_complejidad         INTEGER NOT NULL,
+    estado_reporte            TEXT NOT NULL,
+    nombre_usuario_reportante TEXT NOT NULL
   )
 `);
 
